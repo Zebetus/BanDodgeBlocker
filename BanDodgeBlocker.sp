@@ -97,8 +97,7 @@ public OnClientConnected(client)
 }
 
 public UsersActivePunishmentsLookupComplete(Handle:owner, Handle:query, const String:error[], any:client) {
-	if (query == INVALID_HANDLE) 
-	{
+	if (query == INVALID_HANDLE) {
 		ThrowError("Error querying DB: %s", error);
 	}
 	while (SQL_FetchRow(query)) {
@@ -107,8 +106,7 @@ public UsersActivePunishmentsLookupComplete(Handle:owner, Handle:query, const St
 		SQL_FetchString(query, 1, adminName, sizeof(adminName));
 		SQL_FetchString(query, 2, reason, sizeof(reason));
 
-		if(StrEqual(type, "ban") && Steam_CheckClientSubscription(client, 0) && !Steam_CheckClientDLC(client, 459)) 
-		{
+		if (StrEqual(type, "ban") && Steam_CheckClientSubscription(client, 0) && !Steam_CheckClientDLC(client, 459)) {
 			KickClient(client, "Ban Evasion Detected");
 			return;
 		}
