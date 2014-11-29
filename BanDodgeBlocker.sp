@@ -8,7 +8,7 @@
 public Plugin:myinfo = {
 	name = "IP Checker",
 	author = "Zebetus",
-	description = "This checks the IP of a user each time they log in and checks it against the IPs of banned players, if there is a match it will then check to see if the age of the account suggestes that it is a ban dodger connecting and if this is the case will ban the new account",
+	description = "This auto kicks a suspected ban dodger",
 	version = "0.1",
 	url = "none"
 	
@@ -75,15 +75,13 @@ public OnClientConnected(client)
 	GetClientAuthString(client, auth, sizeof(auth));
 	GetClientIP(client, IP_Address, sizeof(IP_Address));
 	
-	PrintToServer("%s ; %s ; %s", name, auth, IP_Address);
-	
 	decl String:escapedIP[64], String:query[512];
 	SQL_EscapeString(db, IP_Address, escapedIP, sizeof(escapedIP));
 	Format(
 		query,
 		sizeof(query),
 		"SELECT \
-				Punish_Type, Punish_Admin_Name, Punish_Reason, Punish_Time, Punish_Length \
+			Punish_Type, Punish_Admin_Name, Punish_Reason, Punish_Time, Punish_Length \
 		FROM \
 			sourcepunish_punishments \
 		WHERE \
