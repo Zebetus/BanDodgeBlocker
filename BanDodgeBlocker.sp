@@ -81,7 +81,7 @@ public OnClientConnected(client)
 		query,
 		sizeof(query),
 		"SELECT \
-			Punish_Type, Punish_Admin_Name, Punish_Reason, Punish_Time, Punish_Length \
+			1 \
 		FROM \
 			sourcepunish_punishments \
 		WHERE \
