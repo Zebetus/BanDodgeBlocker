@@ -69,13 +69,10 @@ public SMCResult:SMC_EndSection(Handle:smc) {
 
 public OnClientConnected(client)
 {
-	decl String:name[32], String:auth[32], String:IP_Address[32];
+	decl String:IP_Address[32], String:escapedIP[64], String:query[512];
 	
-	GetClientName(client, name, sizeof(name));
-	GetClientAuthString(client, auth, sizeof(auth));
 	GetClientIP(client, IP_Address, sizeof(IP_Address));
 	
-	decl String:escapedIP[64], String:query[512];
 	SQL_EscapeString(db, IP_Address, escapedIP, sizeof(escapedIP));
 	Format(
 		query,
