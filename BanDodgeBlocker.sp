@@ -91,8 +91,8 @@ public OnClientConnected(client)
 			Punish_Player_IP = '%s' AND \
 			Punish_Type = 'ban' \
 			;",
-		escapedIP,
 		serverID
+		escapedIP,
 		);
 	SQL_TQuery(db, UsersActivePunishmentsLookupComplete, query, client);
 }
