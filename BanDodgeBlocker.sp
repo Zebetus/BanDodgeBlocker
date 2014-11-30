@@ -88,7 +88,8 @@ public OnClientConnected(client)
 			UnPunish = 0 AND \
 			(Punish_Server_ID = %i OR Punish_All_Servers = 1) AND \
 			((Punish_Time + (Punish_Length * 60)) > UNIX_TIMESTAMP(NOW()) OR Punish_Length = 0) AND \
-			Punish_Player_IP = '%s' \
+			Punish_Player_IP = '%s' AND \
+			Punish_Type = 'ban'
 			;",
 		escapedIP,
 		serverID
@@ -100,12 +101,8 @@ public UsersActivePunishmentsLookupComplete(Handle:owner, Handle:query, const St
 	if (query == INVALID_HANDLE) {
 		ThrowError("Error querying DB: %s", error);
 	}
-	while (SQL_FetchRow(query)) {
-		decl String:type[64], String:adminName[64], String:reason[64];
-		SQL_FetchString(query, 0, type, sizeof(type));
-		SQL_FetchString(query, 1, adminName, sizeof(adminName));
-		SQL_FetchString(query, 2, reason, sizeof(reason));
-
+	if (SQL_GetRowCount(query)) {
+		SQL_Connect
 		if (StrEqual(type, "ban") && Steam_CheckClientSubscription(client, 0) && !Steam_CheckClientDLC(client, 459)) {
 			KickClient(client, "Ban Evasion Detected");
 			return;
